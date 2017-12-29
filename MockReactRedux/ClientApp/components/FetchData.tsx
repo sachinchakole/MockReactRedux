@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
+import { IApplicationState as ApplicationState }  from '../store';
 import * as WeatherForecastsState from '../store/WeatherForecasts';
 
 // At runtime, Redux will merge together...
 type WeatherForecastProps =
-    WeatherForecastsState.WeatherForecastsState        // ... state we've requested from the Redux store
+    WeatherForecastsState.IWeatherForecastsState        // ... state we've requested from the Redux store
     & typeof WeatherForecastsState.actionCreators      // ... plus action creators we've requested
     & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
 

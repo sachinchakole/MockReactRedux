@@ -15,3 +15,8 @@ export class Layout extends React.Component<{}, {}> {
         </div>;
     }
 }
+
+//validation for child components
+//Layout.propTypes = {
+//    children: React.PropTypes.object.isRequired,
+//}

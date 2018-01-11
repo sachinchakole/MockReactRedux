@@ -1,44 +1,70 @@
 ﻿import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { IApplicationState as ApplicationState } from '../store';
+import { Grid, Row, Col, Well, Panel, PanelGroup, Button, FormGroup, Form, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import * as CourseStore from '../store/Course';
 import { connect } from 'react-redux';
+import { CourseVM } from '../server/CourseVM';
 
 type CourseProp =
     CourseStore.ICourseState
     & typeof CourseStore.actionCreators
     & RouteComponentProps<{}>; 
 
-
-class Course extends React.Component<CourseProp, {}> {
+const initialForm: CourseVM = {
+    name: '',
+    email:''
+}
+class Course extends React.Component<CourseProp, CourseVM> {
     //initialise state for the form in constructor
-    constructor(props: any) {
+    constructor(props: CourseProp) {
         super(props);
-        this.state = (({
-            course: [{ title: "" }]
-        }) as any);
-        this.onTitleChange = this.onTitleChange.bind(this);
-        this.onClickSave = this.onClickSave.bind(this);
-    }
-
-    onTitleChange(event: any) {
-        const course = this.state.course;
-            this.setState({ course: course.title });    
+        this.state = { ...initialForm, ...props.courses };
         
     }
+    handleChange = (event: any) => {
+        this.setState({ ...this.state, [event.target.name]: event.target.value });
 
-    onClickSave() {
-        alert('Saving ');   
     }
-
+    componentWillReceiveProps(nextProps: CourseProp) {
+        if (this.state !== nextProps.courses)
+            this.setState(nextProps.courses);
+    }
+    submit = (event: React.FormEvent<Form>) => {
+        this.props.submitForm(this.state);
+        event.preventDefault();
+       
+    }
+    
     public render() {
         return (<div>
-                   <h1>Courses</h1>
-                   <h2>Add Course</h2>
-                   <div className="col-sm-5"> 
-                       <input className="form-control" onChange={this.onTitleChange} type="text" value={this.state.course.title} />
-                       <input className="btn btn-info" onClick={this.onClickSave} type="submit" value="Save" /> 
-                   </div>
+            <h1>Courses</h1>
+                    
+                    <div className="col-sm-5">
+                <Form horizontal action="/about" method="post" onSubmit={this.submit}>
+                        <fieldset>
+                            <legend className="text-center">Sample Form</legend>
+                            <FormGroup>
+                            <Col md={10} mdOffset={1}>
+                                <ControlLabel>Name</ControlLabel>
+                                  <FormControl name="name" type="text" onChange={this.handleChange} value={this.state.name} placeholder="Name" />
+                            </Col>
+                                <Col md={10} mdOffset={1}>
+                                    <ControlLabel>Email</ControlLabel>
+                                    <FormControl name="email" type="text" onChange={this.handleChange} value={this.state.email} placeholder="email" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup>
+                                <Col md={11} className="text-center">
+                                    <Button type="submit" bsSize="sm" bsStyle="primary">Submit</Button>
+                                </Col>
+                            </FormGroup>
+                        </fieldset>
+                    </Form>
+                    </div>
+                    <div className="col-sm-6">
+                {this.props.courses.name} {this.props.courses.email}
+                    </div>
                 </div>
         );
     }

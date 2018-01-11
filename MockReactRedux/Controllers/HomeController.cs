@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MockReactRedux.Models;
 
 namespace MockReactRedux.Controllers
 {
+   
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -19,5 +21,6 @@ namespace MockReactRedux.Controllers
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             return View();
         }
+       
     }
 }

@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MockReactRedux.Models;
+using Newtonsoft.Json;
 
 namespace MockReactRedux.Controllers
 {
@@ -14,7 +17,10 @@ namespace MockReactRedux.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        private static List<CourseVM> _courseList;
+
         [HttpGet("[action]")]
+
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)
         {
             var rng = new Random();
@@ -26,6 +32,23 @@ namespace MockReactRedux.Controllers
             });
         }
 
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CourseData([FromBody] CourseVM model)
+        {
+            return Json(new CourseVM
+            {
+                Name = model.Name,
+                Email = model.Email
+            });
+        }
+
+
+        [HttpGet("[action]")]
+        public IActionResult GetCourses()   
+        {
+
+            return Ok();
+        }
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

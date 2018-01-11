@@ -23,12 +23,14 @@
   <ItemGroup>
     <None Remove="ClientApp\components\About.tsx" />
     <None Remove="ClientApp\components\Course.tsx" />
+    <None Remove="ClientApp\server\CourseVM.ts" />
     <None Remove="ClientApp\store\Course.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\About.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Course.tsx" />
+    <TypeScriptCompile Include="ClientApp\server\CourseVM.ts" />
     <TypeScriptCompile Include="ClientApp\store\Course.ts" />
   </ItemGroup>
 

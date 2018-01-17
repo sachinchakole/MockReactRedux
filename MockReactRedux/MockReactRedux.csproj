@@ -22,16 +22,16 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\About.tsx" />
-    <None Remove="ClientApp\components\Course.tsx" />
+    <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\server\CourseVM.ts" />
-    <None Remove="ClientApp\store\Course.ts" />
+    <None Remove="ClientApp\store\Login.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\About.tsx" />
-    <TypeScriptCompile Include="ClientApp\components\Course.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\server\CourseVM.ts" />
-    <TypeScriptCompile Include="ClientApp\store\Course.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Login.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

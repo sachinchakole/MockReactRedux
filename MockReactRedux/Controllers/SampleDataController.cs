@@ -31,24 +31,7 @@ namespace MockReactRedux.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
         }
-
-        [HttpPost("[action]")]
-        public async Task<IActionResult> CourseData([FromBody] CourseVM model)
-        {
-            return Json(new CourseVM
-            {
-                Name = model.Name,
-                Email = model.Email
-            });
-        }
-
-
-        [HttpGet("[action]")]
-        public IActionResult GetCourses()   
-        {
-
-            return Ok();
-        }
+        
         public class WeatherForecast
         {
             public string DateFormatted { get; set; }

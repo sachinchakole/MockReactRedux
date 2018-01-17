@@ -5,11 +5,11 @@ import Home from './components/Home';
 import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 import About from './components/about';
-import Course from './components/course';
+import Login from './components/login';
 export const routes = <Layout>
-    <Route exact path='/' component={ Home } />
+    <Route exact path='/' component={Home} />
     <Route path='/counter' component={Counter} />
     <Route path='/about' component={About} />
-    <Route path='/course' component={Course} />
+    <Route path='/login' component={Login} />
     <Route path='/fetchdata/:startDateIndex?' component={ FetchData } />
 </Layout>;

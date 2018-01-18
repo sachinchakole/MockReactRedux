@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MockReactRedux.Models;
 using Newtonsoft.Json;
 
 namespace MockReactRedux.Controllers
@@ -17,8 +16,7 @@ namespace MockReactRedux.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private static List<CourseVM> _courseList;
-
+        
         [HttpGet("[action]")]
 
         public IEnumerable<WeatherForecast> WeatherForecasts(int startDateIndex)

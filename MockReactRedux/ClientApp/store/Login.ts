@@ -1,6 +1,6 @@
 ﻿import { Action, Reducer } from 'redux';
 
-interface ILoginVm {
+export interface ILoginVm {
     email: string,
     password: string,
 }

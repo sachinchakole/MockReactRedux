@@ -26,7 +26,9 @@
     <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\Register.tsx" />
     <None Remove="ClientApp\server\CourseVM.ts" />
+    <None Remove="ClientApp\server\RegisterVm.ts" />
     <None Remove="ClientApp\store\Login.ts" />
+    <None Remove="ClientApp\store\Register.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +36,9 @@
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
     <TypeScriptCompile Include="ClientApp\server\CourseVM.ts" />
+    <TypeScriptCompile Include="ClientApp\server\RegisterVm.ts" />
     <TypeScriptCompile Include="ClientApp\store\Login.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Register.ts" />
   </ItemGroup>
 
   <ItemGroup>

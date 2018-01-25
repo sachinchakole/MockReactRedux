@@ -1,6 +1,8 @@
-﻿import * as React from 'react';
-import { RegisterVm } from '../server/RegisterVm';
+﻿import { IRegisterVm as RegisterVm } from '../server/RegisterVm';
+import { fetch } from 'domain-task';
 import { Action, Reducer } from 'redux';
+import { push } from 'react-router-redux';
+import { IAppThunkAction as AppThunkAction } from './';
 
 
 export interface IRegisterState {
@@ -9,38 +11,66 @@ export interface IRegisterState {
 
 }
 
-export interface IRequestAction {
+interface IRequestAction {
     type: 'REGISTER_REQUEST',
-    message: 'Request sent',
-    user:RegisterVm,
+    payload: RegisterVm,
+    
 }
-export interface ISuccessAction {
+interface ISuccessAction {
     type: 'REGISTER_SUCCESS',
-    message: 'Register succesfull',
+    payload: RegisterVm,
 }
-export interface IFailureAction {
+interface IFailureAction {
     type: 'REGISTER_FAILURE',
-    message: 'Error while processing.........',
+   //payload: string,
 }
 
 type KnowAction = IRequestAction | ISuccessAction | IFailureAction;
 
 export const actionCreators = {
-    request: (user:RegisterVm) => <IRequestAction>{ type: 'REGISTER_REQUEST', user: user },
-    success: () => <ISuccessAction>{ type: 'REGISTER_SUCCESS' },
-    failure: () => <IFailureAction>{ type: 'REGISTER_FAILURE' }
+    request: (form: RegisterVm): AppThunkAction<KnowAction> => (dispatch, getState) => {
+       
+       // const dd = getState().register.isSubmitted;
+            dispatch({ type: 'REGISTER_REQUEST', payload: form });
+        let response = ((fetch(`api/Account/Register`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form)
+            })) as any) as Response ;
+        if (response.ok) {
+            let data = ((response.json()) as any) as RegisterVm;
+            dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+            //dispatch(push('/login'));
+        } else {
+            dispatch({ type: 'REGISTER_FAILURE', payload: 'Registration failed'});
+        }      
 
-}
-
-export const reducer: Reducer<IRegisterState> = (state:IRegisterState, action: KnowAction) => {
-    switch (action.type) {
-        case 'REGISTER_REQUEST':
-            return Object.assign({}, state, { message:action.message });
-        case 'REGISTER_SUCCESS':
-            return Object.assign({}, state, { message:action.message });
-        case 'REGISTER_FAILURE':
-            return Object.assign({}, state, { message: action.message });
-        default:
-            const exhaustiveCheck: never = action;
+    },
+    success: (user: RegisterVm) => (dispatch: any, getState: any) => {
+        dispatch({ type: 'REGISTER_SUCCESS', payload: user });
+    },
+    failure: () => (dispatch: any, getState: any) => {
+        dispatch({ type: 'REGISTER_FAILURE' });
     }
+
 }
+
+const newUser= { firstName: '', lastName: '', username: '', password: '' };
+const initialState={ user: newUser, isSubmitted: false };
+
+
+export const reducer: Reducer<IRegisterState> = (state: IRegisterState, action: KnowAction) => {
+    switch (action.type) {
+    case 'REGISTER_REQUEST':
+        return Object.assign({}, state, { user: action.payload, isSubmitted: true });
+    case 'REGISTER_SUCCESS':
+        return Object.assign({}, state, { user: initialState.user, isSubmitted: false });
+    case 'REGISTER_FAILURE':
+        return Object.assign({}, state, { user: state.user, isSubmited: false });
+    default:
+        const exhaustiveCheck: never = action;
+
+    }
+    return initialState ;
+};

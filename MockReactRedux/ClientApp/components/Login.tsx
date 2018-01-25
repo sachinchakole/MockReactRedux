@@ -4,44 +4,61 @@ import * as LoginStore from '../store/Login';
 import { FormGroup, Form } from 'react-bootstrap';
 
 
-type LoginProp = LoginStore.ILoginState & RouteComponentProps<{}>; 
+type LoginProp = LoginStore.ILoginState & typeof LoginStore.actionCreators & RouteComponentProps<{}>; 
 
-//export interface ILoginState {
-//    email: string,
-//    password: string,
-
-//} 
-//export interface ILoginProp {
-//    name:string
-//}
 
 export default class Login extends React.Component<LoginProp, {}>{
     constructor(props: LoginProp) {
         super(props);
-        console.log(this.state);
+        this.state = {
+            loginData: {
+                username: '',
+                password:''
+            },
+            submitted:false
+        }
     }
-   
+
+    handleChange(event: any) {
+
+        this.setState({
+            loginData: { ...this.state.loginData, [event.target.name]: event.target.value }
+
+        });
+    }
+    handleSubmit(event: any) {
+        this.setState({submitted:true});
+        event.preventDefault();
+    }
+
     render() {
-        console.log(this.props);
+
+        console.log(this.state);
+
+        const { loginData, submitted } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Login</h2>
-                <Form>
-                    <FormGroup>
+                <form onSubmit={(e:any)=> this.handleSubmit(e)}>
+                    <div className={'form-group' + (submitted && !loginData.username ? ' has-error' : '')}>
                         <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value='' />
-                        
-                    </FormGroup>
-                    <FormGroup>
+                        <input type="text" className="form-control" name="username" value={loginData.username} onChange={(e:any)=> this.handleChange(e)} />
+                        {submitted && !loginData.username &&
+                            <div className="help-block">Username is required</div>
+                        }
+                    </div>
+                    <div className={'form-group' + (submitted && !loginData.password ? ' has-error' : '')}>
                             <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" name="password" value='' />
-                        
-                    </FormGroup>
-                    <FormGroup>
-                            <button className="btn btn-primary">Login</button>
-                            <Link to="/register" className="btn btn-link">Register</Link>
-                     </FormGroup>
-                </Form>
+                            <input type="password" className="form-control" name="password" value={loginData.password} onChange={(e: any) => this.handleChange(e)}/>
+                            {submitted && !loginData.password &&
+                                <div className="help-block">Password is required</div>
+                            }
+                    </div>
+                    <div className="form-group">
+                        <button className="btn btn-primary" type="submit">Login</button>
+                        <Link to="/register" className="btn btn-link">Register</Link>
+                     </div>
+                </form>
             </div>
         );
     }

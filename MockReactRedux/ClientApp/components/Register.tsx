@@ -2,11 +2,11 @@
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IApplicationState as ApplicationState } from '../store';
-import * as RegisterStore from '../store/register';
-import { RegisterVm } from '../server/RegisterVm';
+import * as RegisterStore from '../store/Register';
+import { IRegisterVm as RegisterVm } from '../server/RegisterVm';
 import { FormGroup, Form, Button, ControlLabel, FormControl } from 'react-bootstrap';
 
-type RegisterProp = RegisterStore.IRegisterState & typeof RegisterStore.actionCreators & RegisterVm & RouteComponentProps < {} > ;
+type RegisterProp = RegisterStore.IRegisterState & typeof RegisterStore.actionCreators & RouteComponentProps < {} > ;
 
 class Register extends React.Component<RegisterProp, {}>{
     constructor(props: RegisterProp) {
@@ -32,7 +32,10 @@ class Register extends React.Component<RegisterProp, {}>{
     }
     handleSubmit(event:any) {
         this.setState({ isSubmitted: true });
-        console.log(this.state);
+        const { user } = this.state;
+        if(user.firstName && user.lastName && user.username && user.password)
+            this.props.request(this.state.user);
+        //alert(this.state.isSubmitted);
         event.preventDefault();
        
         //this.setState({ isSubmitted: true });

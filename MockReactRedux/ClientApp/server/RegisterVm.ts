@@ -1,4 +1,4 @@
-﻿export class RegisterVm {
+﻿export interface IRegisterVm {
     firstName: string;
     lastName: string;
     username: string;

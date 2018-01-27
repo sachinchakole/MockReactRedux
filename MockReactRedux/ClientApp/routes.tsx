@@ -7,6 +7,7 @@ import Counter from './components/Counter';
 import About from './components/about';
 import Login from './components/login';
 import Register from './components/register';
+
 export const routes = <Layout>
     <Route exact path='/' component={Home} />
     <Route path='/counter' component={Counter} />

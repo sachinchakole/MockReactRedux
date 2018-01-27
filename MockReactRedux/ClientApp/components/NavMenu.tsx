@@ -1,6 +1,13 @@
 import * as React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
+
+interface INavMenuProps {
+    isAuthenticated: boolean,
+    role:string[],
+}
+
+
 export class NavMenu extends React.Component<{}, {}> {
     public render() {
         return <div className='main-nav'>
@@ -35,6 +42,11 @@ export class NavMenu extends React.Component<{}, {}> {
                        <li>
                             <NavLink to={ '/fetchdata' } activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span> Fetch data
+                            </NavLink>
+                       </li>
+                        <li>
+                            <NavLink to={'/login'} activeClassName='active'>
+                                <span className='glyphicon glyphicon-th-list'></span>Login
                             </NavLink>
                         </li>
                       

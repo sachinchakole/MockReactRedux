@@ -8,7 +8,7 @@ export interface IApplicationState {
     counter: Counter.CounterState;
     weatherForecasts: WeatherForecasts.IWeatherForecastsState;
     register: Register.IRegisterState;
-    //login: Login.ILoginState;
+    login: Login.ILoginState;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -18,7 +18,7 @@ export const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     register: Register.reducer,
-    //login: Login.reducer
+    login: Login.reducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

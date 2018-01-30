@@ -29,9 +29,12 @@
     <None Remove="ClientApp\components\Login.tsx" />
     <None Remove="ClientApp\components\PrivateRoute.tsx" />
     <None Remove="ClientApp\components\Register.tsx" />
+    <None Remove="ClientApp\helper\AuthHeader.ts" />
+    <None Remove="ClientApp\server\ApiResult.ts" />
     <None Remove="ClientApp\server\CourseVM.ts" />
     <None Remove="ClientApp\server\LoginInputModel.ts" />
     <None Remove="ClientApp\server\RegisterVm.ts" />
+    <None Remove="ClientApp\store\Home.ts" />
     <None Remove="ClientApp\store\Login.ts" />
     <None Remove="ClientApp\store\Register.ts" />
   </ItemGroup>
@@ -41,9 +44,12 @@
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PrivateRoute.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
+    <TypeScriptCompile Include="ClientApp\helper\AuthHeader.ts" />
+    <TypeScriptCompile Include="ClientApp\server\ApiResult.ts" />
     <TypeScriptCompile Include="ClientApp\server\CourseVM.ts" />
     <TypeScriptCompile Include="ClientApp\server\LoginInputModel.ts" />
     <TypeScriptCompile Include="ClientApp\server\RegisterVm.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Home.ts" />
     <TypeScriptCompile Include="ClientApp\store\Login.ts" />
     <TypeScriptCompile Include="ClientApp\store\Register.ts" />
   </ItemGroup>

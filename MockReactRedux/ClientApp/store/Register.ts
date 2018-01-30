@@ -3,6 +3,7 @@ import { fetch } from 'domain-task';
 import { Action, Reducer } from 'redux';
 import { actionCreators as loginActionCreators } from './Login';
 import { IAppThunkAction as AppThunkAction } from './';
+import { push } from 'react-router-redux';
 
 
 export interface IRegisterState {
@@ -30,23 +31,21 @@ type KnowAction = IRequestAction | ISuccessAction | IFailureAction;
 export const actionCreators = {
     request: (form: RegisterVm): AppThunkAction<KnowAction> => (dispatch, getState) => {
        
-       // const dd = getState().register.isSubmitted;
+       
             dispatch({ type: 'REGISTER_REQUEST', payload: form });
-        let response = ((fetch(`api/Account/Register`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(form)
-            })) as any) as Response ;
-        if (response.ok) {
-            let data = ((response.json()) as any) as RegisterVm;
-            dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+        return (fetch(`api/Account/Register`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(form)
+                }).then(response => response.json() as Promise<RegisterVm>)
+            .then(user => {
+                dispatch({ type: 'REGISTER_SUCCESS', payload: user });
+                dispatch(push('/login') as any);
+            }).catch(error => {
+                dispatch({ type: 'REGISTER_FAILURE', payload: error.message });
+            }));
 
-           //dispatch((loginActionCreators.loginSuccess(data)) as any);
-           // history.push('/login');
-        } else {
-            dispatch({ type: 'REGISTER_FAILURE', payload: 'Registration failed'});
-        }      
 
     },
     success: (user: RegisterVm) => (dispatch: any, getState: any) => {
@@ -58,7 +57,7 @@ export const actionCreators = {
 
 }
 
-const newUser= { firstName: '', lastName: '', username: '', password: '' };
+const newUser: RegisterVm  = { id:0, firstName: '', lastName: '', username: '', password: '' };
 const initialState: IRegisterState  = { user: newUser, isSubmitted: false };
 
 

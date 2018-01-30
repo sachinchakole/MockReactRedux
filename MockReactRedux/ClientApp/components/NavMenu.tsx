@@ -4,7 +4,7 @@ import { NavLink, Link } from 'react-router-dom';
 
 interface INavMenuProps {
     isAuthenticated: boolean,
-    role:string[],
+    
 }
 
 
@@ -47,6 +47,11 @@ export class NavMenu extends React.Component<{}, {}> {
                         <li>
                             <NavLink to={'/login'} activeClassName='active'>
                                 <span className='glyphicon glyphicon-th-list'></span>Login
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to={'/register'} activeClassName='active'>
+                                <span className='glyphicon glyphicon-th-list'></span>Register
                             </NavLink>
                         </li>
                       

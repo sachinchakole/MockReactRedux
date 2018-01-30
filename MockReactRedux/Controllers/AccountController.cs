@@ -93,7 +93,16 @@ namespace MockReactRedux.Controllers
             }
           
         }
-        
-        
+        [AllowAnonymous]
+        [HttpGet("[action]")]
+        public IActionResult GetAll()
+        {
+            var users = _userService.GetAll();
+            var userDtos = _mapper.Map<IList<UserDto>>(users);
+            return Ok(userDtos);
+        }
+
+
+
     }
 }

@@ -46,7 +46,7 @@ namespace MockReactRedux.Infrastructure
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _dataContext.Users;
         }
 
         public User GetById(int id)

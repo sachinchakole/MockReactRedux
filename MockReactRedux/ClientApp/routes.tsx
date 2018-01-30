@@ -4,12 +4,14 @@ import { Layout } from './components/Layout';
 import Home from './components/Home';
 import FetchData from './components/FetchData';
 import Counter from './components/Counter';
-import About from './components/about';
-import Login from './components/login';
+import About from './components/About';
+import Login from './components/Login';
 import Register from './components/register';
+import PrivateRoute from './components/PrivateRoute';
+
 
 export const routes = <Layout>
-    <Route exact path='/' component={Home} />
+    <PrivateRoute exact path='/' component={Home} />
     <Route path='/counter' component={Counter} />
     <Route path='/about' component={About} />
     <Route path='/login' component={Login} />

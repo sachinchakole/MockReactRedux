@@ -30,20 +30,18 @@ class Register extends React.Component<RegisterProp, {}>{
             
         });
     }
-    handleSubmit(event:any) {
+    handleSubmit(event: any) {
+        
+
         this.setState({ isSubmitted: true });
         const { user } = this.state;
         if(user.firstName && user.lastName && user.username && user.password)
             this.props.request(this.state.user);
-        //alert(this.state.isSubmitted);
-        event.preventDefault();
        
-        //this.setState({ isSubmitted: true });
-        
+        event.preventDefault();
     }
 
     render() {
-
         
         const { user, isSubmitted } = this.state;
        

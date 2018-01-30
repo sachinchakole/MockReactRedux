@@ -1,6 +1,8 @@
 ﻿import { Action, Reducer } from 'redux';
 import { IAppThunkAction as AppThunkAction } from './';
-import {LoginInputModel} from '../server/LoginInputModel';
+import { LoginInputModel } from '../server/LoginInputModel';
+import { IApiResult as ApiResult } from '../server/ApiResult';
+import { push } from 'react-router-redux';
 
 
 export interface ILoginState {
@@ -11,20 +13,22 @@ export interface ILoginState {
 } 
 
 interface IStartLoginAction { type: 'START_LOGIN' }
-interface ILoginSuccessAction { type: 'LOGIN_SUCCESS' }
+interface ILoginSuccessAction { type: 'LOGIN_SUCCESS', payload: ApiResult}
 interface ILoginFailedAction { type: 'LOGIN_FAILED' }
 
-interface IStartLogoutAction { type: 'START_LOGOUT' }
-interface ILogoutSuccessAction { type: 'LOGOUT_SUCCESS' }
-interface ILogoutFailedAction { type: 'LOGOUT_FAILED' }
+interface IUserLogoutAction { type: 'USER_LOGOUT' }
 
-type KnownAction = | IStartLoginAction | ILoginSuccessAction | ILoginFailedAction | IStartLogoutAction | ILogoutSuccessAction | ILogoutFailedAction;
+type KnownAction = | IStartLoginAction | ILoginSuccessAction | ILoginFailedAction | IUserLogoutAction;
 
 
 
 export const actionCreators = {
-    loginSuccess: (user:any): AppThunkAction<KnownAction> => (dispatch, getState) => {
-        
+    loginSuccess: (user: ApiResult): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        return (() => {
+            dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+            dispatch((push('/')) as any);
+        })();
+
     },
     startLogin: (loginInput: LoginInputModel): AppThunkAction<KnownAction> => (dispatch, getState) => {
 
@@ -35,51 +39,48 @@ export const actionCreators = {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(loginInput)
 
-                }).then(response => {
-                const contentType = response.headers.get('content-type');
-                if (contentType && contentType.includes("application/json")) {
-                    let dd = response.json() as Promise<any>;
-                    console.log('login succes' + dd);
-                }
-               
-                //dispatch((actionCreators.loginSuccess(data)) as any);
-            })
+                }).then(response=> response.json() as Promise<ApiResult>)
             .then(user => {
-                console.log('loggedin User: ' + JSON.stringify(user));
+               
+                localStorage.setItem('user', JSON.stringify(user));
+                dispatch((actionCreators.loginSuccess(user)) as any);
+                
+                console.log('loggedin User: ' + localStorage.user);
+
             }).catch(reason => {
-                console.log('login failed with: ' + Promise.reject(reason && reason.message));
+                console.log('login failed with: ' + reason.message);
                 dispatch({ type: 'LOGIN_FAILED' });
             });
-        //if (response.ok) {
-        //    //const data = response.json();
-        //    //dispatch((actionCreators.loginSuccess(data)) as any);
-        //    
-        //} else {
-        //    
-        //    console.log('login failed:');
-        //}
-    }
+        
+    },
+    logout: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+        
+        
+        if (localStorage.length > 0) {
+            dispatch({ type: 'USER_LOGOUT' });
+            return localStorage.removeItem('user');    
+        }
+        
+    } 
 
 }
+
+//let user = JSON.parse(localStorage.getItem('user')as any);
+//const initialState: ILoginState = <ILoginState>(user? { loggedIn: true, username: user.username, userId:user.id } : {});
 
 export const reducer: Reducer<ILoginState> = (state: ILoginState, action: KnownAction) => {
     switch (action.type) {
         case 'START_LOGIN':
             return { loggedin: false };
         case 'LOGIN_SUCCESS':
-            return { loggedin: true };
+            return { loggedin: true, user: action.payload };
         case 'LOGIN_FAILED':
             return { loggedin: false };
-        case 'START_LOGOUT':
-            return { loggedin: true };
-        case 'LOGOUT_SUCCESS':
+        case 'USER_LOGOUT':
             return { loggedin: false };
-        case 'LOGOUT_FAILED':
-            return { loggedin: true };
-
         default:
             const exhaustiveCheck: never = action;
     }
 
-    return state || {loggedin: false};
+    return state || {loggedin: false} ;
 }

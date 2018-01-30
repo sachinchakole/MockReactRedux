@@ -5,7 +5,7 @@ import { IApplicationState as ApplicationState } from '../store';
 import { FormGroup, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LoginInputModel } from '../server/LoginInputModel';
-
+ 
 
 type LoginProp = LoginStore.ILoginState & LoginInputModel & typeof LoginStore.actionCreators & RouteComponentProps<{}>; 
 
@@ -13,6 +13,9 @@ type LoginProp = LoginStore.ILoginState & LoginInputModel & typeof LoginStore.ac
 class Login extends React.Component<LoginProp, {}>{
     constructor(props: LoginProp) {
         super(props);
+
+        console.log('localhost: ' + localStorage.length);
+   
         this.state = {
             loginData: {
                 username: '',
@@ -21,6 +24,9 @@ class Login extends React.Component<LoginProp, {}>{
             submitted:false
         }
     }
+    //componentDidMount() {
+    //    this.props.logout();
+    //}
 
     handleChange(event: any) {
 
@@ -35,12 +41,11 @@ class Login extends React.Component<LoginProp, {}>{
         const { loginData } = this.state;
         if (loginData.username && loginData.password)
             this.props.startLogin(loginData);
-
         
     }
 
     render() {
-
+       
         console.log(this.state);
 
         const { loginData, submitted } = this.state;
@@ -66,6 +71,7 @@ class Login extends React.Component<LoginProp, {}>{
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary" type="submit">Login</button>
+                       
                         <Link to="/register" className="btn btn-link">Register</Link>
                      </div>
                 </form>

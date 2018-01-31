@@ -13,10 +13,10 @@ class Home extends React.Component<UsersProp, {}> {
         super(props);
     }
     
-    //componentDidMount() {
+    componentDidMount() {
        
-    //   this.props.startGetAll();
-    //}
+       this.props.startGetAll();
+    }
 
     public render() {
         const { users, loading } = this.props;
@@ -42,16 +42,14 @@ class Home extends React.Component<UsersProp, {}> {
         return <table className='table'>
                    <thead>
                 <tr>
-                             <th>Id</th>   
                             <th>First Name</th>
                            <th>Last Name</th>
                            <th>Email</th>
                        </tr>
                    </thead>
                    <tbody>
-                     {this.props.users.map(user => 
-                    <tr key={user.id}>
-                        <td>{user.id}</td>
+                     {this.props.users.map((user, index) => 
+                    <tr key={index}>
                         <td>{user.firstName}</td>
                         <td>{user.lastName}</td>
                         <td>{user.username}</td>

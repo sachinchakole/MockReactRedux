@@ -9,14 +9,14 @@ export interface ILoginState {
     loggedin: boolean;
     userId?: string;
     userName?: string;
-   
+    error?:string;
 } 
 
 interface IStartLoginAction { type: 'START_LOGIN' }
 interface ILoginSuccessAction { type: 'LOGIN_SUCCESS', payload: ApiResult}
-interface ILoginFailedAction { type: 'LOGIN_FAILED' }
+interface ILoginFailedAction { type: 'LOGIN_FAILED', payload: { error:string }  }
 
-interface IUserLogoutAction { type: 'USER_LOGOUT' }
+interface IUserLogoutAction { type: 'USER_LOGOUT'}
 
 type KnownAction = | IStartLoginAction | ILoginSuccessAction | ILoginFailedAction | IUserLogoutAction;
 
@@ -47,9 +47,9 @@ export const actionCreators = {
                 
                 console.log('loggedin User: ' + localStorage.user);
 
-            }).catch(reason => {
-                console.log('login failed with: ' + reason.message);
-                dispatch({ type: 'LOGIN_FAILED' });
+            }).catch(error => {
+                console.log('login failed with: ' + error.message);
+                dispatch({ type: 'LOGIN_FAILED', payload: { error: 'Username or password is incorrect' } });
             });
         
     },
@@ -75,7 +75,7 @@ export const reducer: Reducer<ILoginState> = (state: ILoginState, action: KnownA
         case 'LOGIN_SUCCESS':
             return { loggedin: true, user: action.payload };
         case 'LOGIN_FAILED':
-            return { loggedin: false };
+            return { loggedin: false, error: action.payload.error };
         case 'USER_LOGOUT':
             return { loggedin: false };
         default:

@@ -17,6 +17,15 @@ export default createServerRenderer(params => {
         const store = configureStore(createMemoryHistory());
         store.dispatch(replace(urlAfterBasename));
 
+        //let user = JSON.parse(localStorage.getItem('user') as any);
+        //if (localStorage.length > 0) {
+        //    routes.props.push('/');
+        //} else {
+        //    store.dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        //}
+        
+
+        //console.log('IsAuthenticate', params.data.isAuthenticated);
         // Prepare an instance of the application and perform an inital render that will
         // cause any async tasks (e.g., data access) to begin
         const routerContext: any = {};
@@ -25,6 +34,7 @@ export default createServerRenderer(params => {
                 <StaticRouter basename={ basename } context={ routerContext } location={ params.location.path } children={ routes } />
             </Provider>
         );
+
         renderToString(app);
 
         // If there's a redirection, just send this information back to the host application

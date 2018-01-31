@@ -57,7 +57,7 @@ export const actionCreators = {
 
 }
 
-const newUser: RegisterVm  = { id:0, firstName: '', lastName: '', username: '', password: '' };
+const newUser: RegisterVm  = { firstName: '', lastName: '', username: '', password: '' };
 const initialState: IRegisterState  = { user: newUser, isSubmitted: false };
 
 

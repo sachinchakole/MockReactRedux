@@ -12,20 +12,14 @@ export default createServerRenderer(params => {
     return new Promise<RenderResult>((resolve, reject) => {
         // Prepare Redux store with in-memory history, and dispatch a navigation event
         // corresponding to the incoming URL
+        
         const basename = params.baseUrl.substring(0, params.baseUrl.length - 1); // Remove trailing slash
         const urlAfterBasename = params.url.substring(basename.length);
         const store = configureStore(createMemoryHistory());
         store.dispatch(replace(urlAfterBasename));
 
-        //let user = JSON.parse(localStorage.getItem('user') as any);
-        //if (localStorage.length > 0) {
-        //    routes.props.push('/');
-        //} else {
-        //    store.dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-        //}
         
-
-        //console.log('IsAuthenticate', params.data.isAuthenticated);
+        //console.log('url: ', params.data.isAuthenticated);
         // Prepare an instance of the application and perform an inital render that will
         // cause any async tasks (e.g., data access) to begin
         const routerContext: any = {};

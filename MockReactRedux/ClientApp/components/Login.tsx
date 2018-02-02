@@ -35,7 +35,7 @@ class Login extends React.Component<LoginProp, {}>{
     }
     handleSubmit(event: any) {
         event.preventDefault();
-        console.log('IsLoggedIn', this.props.loggedin);
+      
         this.setState({ submitted: true});
         const { loginData } = this.state;
         if (loginData.username && loginData.password)
@@ -44,8 +44,6 @@ class Login extends React.Component<LoginProp, {}>{
     }
 
     render() {
-       
-        console.log(this.state);
         const { loggedin } = this.props;
         const { loginData, submitted } = this.state;
         return (

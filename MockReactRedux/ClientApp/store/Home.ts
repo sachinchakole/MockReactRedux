@@ -22,7 +22,7 @@ export const actionCreators = {
       return fetch(`api/Account/GetAll`,
                 {
                     method: 'GET',
-                    headers: authHeader()
+                    headers: authHeader
                 }).then(response=> response.json() as Promise<RegisterVm[]>)
             .then(users => {
                 console.log('Users: ' + users);

@@ -4,6 +4,7 @@ import { IApiResult as ApiResult } from '../server/ApiResult';
 import { IApplicationState as ApplicationState } from '../store';
 import * as HomeStore from '../store/Home';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 type UsersProp = HomeStore.IUserState & typeof HomeStore.actionCreators & RouteComponentProps<{}>; 
 
@@ -11,10 +12,12 @@ type UsersProp = HomeStore.IUserState & typeof HomeStore.actionCreators & RouteC
 class Home extends React.Component<UsersProp, {}> {
     constructor(props: UsersProp) {
         super(props);
+        if (localStorage.length === 0) {
+            dispatchEvent(push('/login') as any);
+        }
     }
     
     componentDidMount() {
-       
        this.props.startGetAll();
     }
 

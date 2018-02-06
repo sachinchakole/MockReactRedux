@@ -44,6 +44,7 @@ export const actionCreators = {
                 dispatch(push('/login') as any);
             }).catch(error => {
                 dispatch({ type: 'REGISTER_FAILURE', payload: error.message });
+                console.log('Getting an error while registration: ', error.message);
             }));
 
 

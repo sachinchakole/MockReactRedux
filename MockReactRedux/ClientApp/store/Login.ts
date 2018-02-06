@@ -3,7 +3,7 @@ import { IAppThunkAction as AppThunkAction } from './';
 import { LoginInputModel } from '../server/LoginInputModel';
 import { IApiResult as ApiResult } from '../server/ApiResult';
 import { push } from 'react-router-redux';
-
+import { authHeader } from '../helper/authHeader';
 
 export interface ILoginState {
     loggedin: boolean;
@@ -44,7 +44,7 @@ export const actionCreators = {
                
                 localStorage.setItem('user', JSON.stringify(user));
                 dispatch((actionCreators.loginSuccess(user)) as any);
-                
+                authHeader(user.token);
                 console.log('loggedin User: ' + localStorage.user);
 
             }).catch(error => {

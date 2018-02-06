@@ -1,4 +1,5 @@
 ﻿import { Action, Reducer } from 'redux';
+import { fetch, addTask } from 'domain-task';
 import { IAppThunkAction as AppThunkAction } from './';
 import { IRegisterVm as RegisterVm } from '../server/RegisterVm';
 import { authHeader } from '../helper/authHeader';
@@ -18,11 +19,12 @@ type KnowAction = IStartGetAllUsers | ISuccessGetAllUsers | IFailedGetAllUsers
 
 export const actionCreators = {
     startGetAll: (): AppThunkAction<KnowAction> => (dispatch, gwtState) => {
+        let user = JSON.parse(localStorage.getItem('user') as any);
         dispatch({ type: 'START_GETALL' });
-      return fetch(`api/Account/GetAll`,
+      let task = fetch(`api/Account/GetAll`,
                 {
                     method: 'GET',
-                    headers: authHeader
+                    headers: authHeader(user.token)
                 }).then(response=> response.json() as Promise<RegisterVm[]>)
             .then(users => {
                 console.log('Users: ' + users);
@@ -30,7 +32,8 @@ export const actionCreators = {
           }).catch(error => {
               console.log('Error occued while fetching all Users: ' + error);
               dispatch({ type:'FAILED_GETALL', error: error.message});
-          });
+            });
+        addTask(task);
     }
 }
 

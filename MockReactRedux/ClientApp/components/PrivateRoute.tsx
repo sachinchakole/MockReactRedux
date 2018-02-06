@@ -6,14 +6,15 @@ type RouteComponent = React.StatelessComponent<RouteComponentProps<{}>> | React.
 
 
 
-export default  ({ component, ...rest }: any) => {
+export default ({ component, ...rest }: any) => {
+  
     const renderFn: (Component?: any) => (props: any) => any = (Component?: RouteComponent) => (props: RouteProps) => {
         if (!Component) {
             return null;
         }
-        
+       
         let user = JSON.parse(localStorage.getItem('user') as any);
-        if (localStorage.length > 0) {
+        if (user !== null) {
             console.log("user loggedIn success!!");
             return <Component {...props}/>;
         }

@@ -27,15 +27,20 @@
   <ItemGroup>
     <None Remove="ClientApp\components\About.tsx" />
     <None Remove="ClientApp\components\Login.tsx" />
+    <None Remove="ClientApp\components\NewProduct.tsx" />
     <None Remove="ClientApp\components\PrivateRoute.tsx" />
+    <None Remove="ClientApp\components\Product.tsx" />
     <None Remove="ClientApp\components\Register.tsx" />
+    <None Remove="ClientApp\Constant.ts" />
     <None Remove="ClientApp\helper\AuthHeader.ts" />
     <None Remove="ClientApp\server\ApiResult.ts" />
     <None Remove="ClientApp\server\CourseVM.ts" />
     <None Remove="ClientApp\server\LoginInputModel.ts" />
+    <None Remove="ClientApp\server\ProductViewModel.ts" />
     <None Remove="ClientApp\server\RegisterVm.ts" />
     <None Remove="ClientApp\store\Home.ts" />
     <None Remove="ClientApp\store\Login.ts" />
+    <None Remove="ClientApp\store\Product.ts" />
     <None Remove="ClientApp\store\Register.ts" />
   </ItemGroup>
 
@@ -43,14 +48,19 @@
     <TypeScriptCompile Include="ClientApp\components\About.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Login.tsx" />
     <TypeScriptCompile Include="ClientApp\components\PrivateRoute.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\NewProduct.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Product.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
+    <TypeScriptCompile Include="ClientApp\Constant.ts" />
     <TypeScriptCompile Include="ClientApp\helper\AuthHeader.ts" />
     <TypeScriptCompile Include="ClientApp\server\ApiResult.ts" />
     <TypeScriptCompile Include="ClientApp\server\CourseVM.ts" />
     <TypeScriptCompile Include="ClientApp\server\LoginInputModel.ts" />
+    <TypeScriptCompile Include="ClientApp\server\ProductViewModel.ts" />
     <TypeScriptCompile Include="ClientApp\server\RegisterVm.ts" />
     <TypeScriptCompile Include="ClientApp\store\Home.ts" />
     <TypeScriptCompile Include="ClientApp\store\Login.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Product.ts" />
     <TypeScriptCompile Include="ClientApp\store\Register.ts" />
   </ItemGroup>
 

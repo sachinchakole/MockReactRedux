@@ -12,6 +12,9 @@ type UsersProp = HomeStore.IUserState & typeof HomeStore.actionCreators & RouteC
 class Home extends React.Component<UsersProp, {}> {
     constructor(props: UsersProp) {
         super(props);
+        this.state = {
+            users: {}
+        }
         if (localStorage.length === 0) {
             dispatchEvent(push('/login') as any);
         }
@@ -20,10 +23,9 @@ class Home extends React.Component<UsersProp, {}> {
     componentDidMount() {
        this.props.startGetAll();
     }
-
+   
     public render() {
         const { users, loading } = this.props;
-        console.log(users);
         return <div>
             <h1>Hello, world!</h1>
            
@@ -37,31 +39,29 @@ class Home extends React.Component<UsersProp, {}> {
             <h3>All registered users:</h3>
             {loading && <em>Loading users...</em>}
 
-            {this.renderUsers()}
-            <p> <Link className='btn btn-info btn-sm' to={'/login'}> Logout</Link></p>
-        </div>;
-    }
-    private renderUsers() {
-        return <table className='table'>
-                   <thead>
-                <tr>
-                            <th>First Name</th>
+                   <table className='table'>
+                       <thead>
+                       <tr>
+                           <th>First Name</th>
                            <th>Last Name</th>
                            <th>Email</th>
                        </tr>
-                   </thead>
-                   <tbody>
-                     {this.props.users.map((user, index) => 
-                    <tr key={index}>
-                        <td>{user.firstName}</td>
-                        <td>{user.lastName}</td>
-                        <td>{user.username}</td>
+                       </thead>
+                       <tbody>
+                       {users.map((user, index) =>
+                        <tr key={index}>
+                            <td>{user.firstName}</td>
+                            <td>{user.lastName}</td>
+                            <td>{user.username}</td>
 
-                    </tr>
-                )}  
-            </tbody>
-        </table>;
+                        </tr>
+                    )}
+                       </tbody>
+                   </table>
+            <p> <Link className='btn btn-info btn-sm' to={'/login'}> Logout</Link></p>
+        </div>;
     }
+   
 
 }
 export default connect(

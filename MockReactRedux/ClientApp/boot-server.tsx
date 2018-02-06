@@ -7,19 +7,26 @@ import { createMemoryHistory } from 'history';
 import { createServerRenderer, RenderResult } from 'aspnet-prerendering';
 import { routes } from './routes';
 import configureStore from './configureStore';
+import { authHeader } from './helper/authHeader';
 
 export default createServerRenderer(params => {
     return new Promise<RenderResult>((resolve, reject) => {
         // Prepare Redux store with in-memory history, and dispatch a navigation event
         // corresponding to the incoming URL
-        
+
+        var result = '<h1>Hello world!</h1>'
+            + '<p>Current time in Node is: ' + new Date() + '</p>'
+            + '<p>Request path is: ' + params.location.path + '</p>'
+            + '<p>Absolute URL is: ' + params.absoluteUrl + '</p>';
+
+        //resolve({ html: result });
+
         const basename = params.baseUrl.substring(0, params.baseUrl.length - 1); // Remove trailing slash
         const urlAfterBasename = params.url.substring(basename.length);
         const store = configureStore(createMemoryHistory());
         store.dispatch(replace(urlAfterBasename));
 
         
-        //console.log('url: ', params.data.isAuthenticated);
         // Prepare an instance of the application and perform an inital render that will
         // cause any async tasks (e.g., data access) to begin
         const routerContext: any = {};
@@ -30,7 +37,7 @@ export default createServerRenderer(params => {
         );
 
         renderToString(app);
-
+        console.log('routerContext: ' + routerContext.url);
         // If there's a redirection, just send this information back to the host application
         if (routerContext.url) {
             resolve({ redirectUrl: routerContext.url });

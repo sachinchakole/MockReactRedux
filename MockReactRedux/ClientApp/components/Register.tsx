@@ -46,7 +46,7 @@ class Register extends React.Component<RegisterProp, {}>{
         const { user, isSubmitted } = this.state;
        
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div className="col-md-6">
                 <h2>Register</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (isSubmitted && !user.firstName ? ' has-error' : '')}>

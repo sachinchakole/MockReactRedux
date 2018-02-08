@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { NavMenu } from './NavMenu';
+import NavMenu from './NavMenu';
 
 export class Layout extends React.Component<{}, {}> {
     public render() {
         return <div className='container-fluid'>
-            <div className='row'>
-                <div className='col-sm-3'>
+                
                     <NavMenu />
-                </div>
-                <div className='col-sm-9'>
+                
+                    <div style={{ top: '50px' }} className='col-lg-8 col-md-7 col-sm-6' >
                     { this.props.children }
                 </div>
-            </div>
+            
         </div>;
     }
 }

@@ -28,8 +28,9 @@ class Login extends React.Component<LoginProp, {}>{
 
     handleChange(event: any) {
 
-        this.setState({
-            loginData: { ...this.state.loginData, [event.target.name]: event.target.value }
+        this.setState({ 
+            loginData: { ...this.state.loginData, [event.target.name]: event.target.value },
+            loggedin:this.state.loggedin
 
         });
     }
@@ -45,9 +46,10 @@ class Login extends React.Component<LoginProp, {}>{
 
     render() {
         const { loggedin } = this.props;
+        console.log('loggedIn:', loggedin);
         const { loginData, submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div className="col-md-6">
                 <h2>Login</h2>
                 <form onSubmit={(e:any)=> this.handleSubmit(e)}>
                     <div className={'form-group' + (submitted && !loginData.username ? ' has-error' : '')}>

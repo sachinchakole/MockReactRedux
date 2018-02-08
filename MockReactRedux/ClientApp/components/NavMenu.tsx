@@ -1,64 +1,61 @@
 import * as React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
+import { connect } from 'react-redux';
+import { IApplicationState as ApplicationState } from '../store';
 
 interface INavMenuProps {
     isAuthenticated: boolean,
     
 }
 
-
-export class NavMenu extends React.Component<{}, {}> {
-    public render() {
-        return <div className='main-nav'>
-                <div className='navbar navbar-inverse'>
-                <div className='navbar-header'>
-                    <button type='button' className='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
-                        <span className='sr-only'>Toggle navigation</span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                        <span className='icon-bar'></span>
-                    </button>
-                    <Link className='navbar-brand' to={ '/' }>MockReactRedux</Link>
-                </div>
-                <div className='clearfix'></div>
-                <div className='navbar-collapse collapse'>
-                    <ul className='nav navbar-nav'>
-                        <li>
-                            <NavLink exact to={ '/' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> Home
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={ '/counter' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> Counter
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={'/about'} activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> About
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to={'/product'} activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> Product
-                            </NavLink>
-                        </li>
-                       <li>
-                            <NavLink to={ '/fetchdata' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span> Fetch data
-                            </NavLink>
-                       </li>
-                        <li>
-                            <NavLink to={'/login'} activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span>Login
-                            </NavLink>
-                        </li>
-                      
-                      
-                    </ul>
-                </div>
-            </div>
-        </div>;
+export class NavMenu extends React.Component<INavMenuProps, {}> {
+    
+   public render() {
+         console.log('isAuthenticate:' + this.props.isAuthenticated);
+       return <Navbar fixedTop={true}>
+                  <Navbar.Header>
+                      <Navbar.Brand>
+                   <Link className='navbar-brand' to={'/'}>MockDemo</Link>
+                      </Navbar.Brand>
+                      <Navbar.Toggle />
+                  </Navbar.Header>
+                  <Navbar.Collapse>
+               <Nav pullRight>
+                       <LinkContainer to="/">
+                           <NavItem eventKey={1}>Home</NavItem>
+                       </LinkContainer>
+                          <LinkContainer to="/about">
+                              <NavItem eventKey={2}>About</NavItem>
+                          </LinkContainer>
+                          <LinkContainer to="/counter">
+                              <NavItem eventKey={3}>Counter</NavItem>
+                          </LinkContainer>
+                          <LinkContainer to="/product">
+                              <NavItem eventKey={4}>Product</NavItem>
+                          </LinkContainer>
+                          <NavDropdown eventKey={5} title="Login" id="nav-dropdown">
+                              <LinkContainer to="/login">
+                                  <MenuItem hidden={this.props.isAuthenticated} eventKey={5.1}>Login</MenuItem>
+                              </LinkContainer>
+                              <LinkContainer to="/register">
+                                  <MenuItem disabled={this.props.isAuthenticated} eventKey={5.2}>Register</MenuItem>
+                              </LinkContainer>
+                              <LinkContainer to="/user">
+                                  <MenuItem eventKey={5.3}>User Profile</MenuItem>
+                              </LinkContainer>
+                              <MenuItem divider />
+                             
+                          </NavDropdown>
+                      </Nav>
+                  </Navbar.Collapse>
+              </Navbar>
     }
 }
+
+export default connect(
+    (state: ApplicationState) => { return { isAuthenticated: state.login.loggedin }; },
+    {}
+)(NavMenu);

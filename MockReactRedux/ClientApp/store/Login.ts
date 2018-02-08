@@ -39,14 +39,14 @@ export const actionCreators = {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(loginInput)
 
-                }).then(response=> response.json() as Promise<ApiResult>)
+            })
+            .then(response => response.json() as Promise<ApiResult>)
             .then(user => {
-               
-                localStorage.setItem('user', JSON.stringify(user));
+                
+                 localStorage.setItem('user', JSON.stringify(user));
                 dispatch((actionCreators.loginSuccess(user)) as any);
-                authHeader(user.token);
-                console.log('loggedin User: ' + localStorage.user);
-
+               
+               
             }).catch(error => {
                 console.log('login failed with: ' + error.message);
                 dispatch({ type: 'LOGIN_FAILED', payload: { error: 'Username or password is incorrect' } });

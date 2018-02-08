@@ -19,19 +19,16 @@ type KnowAction = IStartGetAllUsers | ISuccessGetAllUsers | IFailedGetAllUsers
 
 export const actionCreators = {
     startGetAll: (): AppThunkAction<KnowAction> => (dispatch, gwtState) => {
-        let user = JSON.parse(localStorage.getItem('user') as any);
+       
         dispatch({ type: 'START_GETALL' });
-      let task = fetch(`api/Account/GetAll`,
+        let task = fetch(`api/Account/GetAll`,
                 {
                     method: 'GET',
-                    headers: authHeader(user.token)
-                }).then(response=> response.json() as Promise<RegisterVm[]>)
+                    headers: authHeader()
+                })
+            .then(response => response.json() as Promise<RegisterVm[]>)
             .then(users => {
-                console.log('Users: ' + users);
-                dispatch({ type: 'SUCCESS_GETALL', users: users});
-          }).catch(error => {
-              console.log('Error occued while fetching all Users: ' + error);
-              dispatch({ type:'FAILED_GETALL', error: error.message});
+                dispatch({ type: 'SUCCESS_GETALL', users: users });
             });
         addTask(task);
     }
@@ -46,12 +43,12 @@ export const reducer: (state: IUserState, action: KnowAction) =>
         case 'START_GETALL':
             return { loading: false };
         case 'SUCCESS_GETALL':
-            return { users: action.users };
+            return { users: action.users, loading:false };
         case 'FAILED_GETALL':
             return { error: action.error };
         default:
             const exhaustiveCheck: never = action;
         }
-        return initialState;
+        return state || initialState;
     }); 
   

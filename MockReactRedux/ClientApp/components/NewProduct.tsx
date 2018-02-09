@@ -13,7 +13,7 @@ class NewProduct extends React.Component<ProductProp, {}> {
         super(props);
         this.state = {
             product: {
-                name: '',
+                prodName: '',
                 price:'',
             },
             isSubmitted: false
@@ -30,7 +30,7 @@ class NewProduct extends React.Component<ProductProp, {}> {
     handleSubmit(e: any) {
         this.setState({ isSubmitted: true });
         const { product } = this.state;
-        console.log(product);
+        this.props.addProduct(product);
         e.preventDefault();
     }
 
@@ -41,7 +41,7 @@ class NewProduct extends React.Component<ProductProp, {}> {
             <form onSubmit={(e:any)=> this.handleSubmit(e)}>
                 <div className="form-group">
                     <label>Name</label>
-                    <input className="form-control" type="text" name="name" value={product.name} onChange={ (e:any) => this.handleChange(e) }/>
+                    <input className="form-control" type="text" name="prodName" value={product.prodName} onChange={ (e:any) => this.handleChange(e) }/>
                 </div>
                 <div className="form-group">
                     <label>Price</label>

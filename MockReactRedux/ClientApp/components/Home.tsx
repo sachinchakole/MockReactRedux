@@ -20,7 +20,7 @@ class Home extends React.Component<UsersProp, {}> {
     }
     
     componentDidMount() {
-        this.setState(JSON.parse(localStorage.getItem('user') as any));
+        
        this.props.startGetAll();
     }
     

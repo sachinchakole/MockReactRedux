@@ -31,6 +31,7 @@
     <None Remove="ClientApp\components\PrivateRoute.tsx" />
     <None Remove="ClientApp\components\Product.tsx" />
     <None Remove="ClientApp\components\Register.tsx" />
+    <None Remove="ClientApp\components\UpdateProduct.tsx" />
     <None Remove="ClientApp\Constant.ts" />
     <None Remove="ClientApp\helper\AuthHeader.ts" />
     <None Remove="ClientApp\server\ApiResult.ts" />
@@ -51,6 +52,7 @@
     <TypeScriptCompile Include="ClientApp\components\NewProduct.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Product.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Register.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\UpdateProduct.tsx" />
     <TypeScriptCompile Include="ClientApp\Constant.ts" />
     <TypeScriptCompile Include="ClientApp\helper\AuthHeader.ts" />
     <TypeScriptCompile Include="ClientApp\server\ApiResult.ts" />

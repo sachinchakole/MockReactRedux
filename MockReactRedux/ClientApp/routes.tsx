@@ -16,8 +16,9 @@ export const routes = <Layout>
     <PrivateRoute exact path='/' component={Home} />
     <PrivateRoute path='/counter' component={Counter} />
     <PrivateRoute path='/about' component={About} />
-    <Route path='/product' component={Product}/>
-     <Route path='/newproduct' component={NewProduct} />
+    <PrivateRoute path='/product' component={Product}/>
+    <PrivateRoute path='/newproduct' component={NewProduct} />
+    <PrivateRoute path='/newproduct/:id' component={NewProduct} />
     <Route path='/login' component={Login} />
 <Route path='/register' component={Register} />
     <PrivateRoute path='/fetchdata/:startDateIndex?' component={ FetchData } />

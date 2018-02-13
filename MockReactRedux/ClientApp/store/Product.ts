@@ -4,6 +4,7 @@ import { fetch, addTask } from 'domain-task';
 import { Action, Reducer } from 'redux';
 import { IProductViewModel as ProductViewModel } from '../server/ProductViewModel';
 import { push } from 'react-router-redux';
+import { authHeader } from '../helper/authHeader';
 
 export interface IProductState {
     products: IProductVm[],
@@ -11,6 +12,7 @@ export interface IProductState {
 }
 
 export interface IProductVm {
+    id:number,
     prodName: string,
     price:string,
 }
@@ -35,7 +37,7 @@ export interface ISuccessProductAction {
 
 export interface IDeleteProductAction {
     type: 'DELETE_PRODUCT',
-   
+   payload:number,
 }
 export interface IUpdateProductAction {
     type: 'UPDATE_PRODUCT',
@@ -51,10 +53,16 @@ type KnowAction = IAddProductAction |
 
 export const actionCreators = {
     addProduct: (product: IProductVm): AppThunkAction<KnowAction> => (dispatch, getState) => {
+
+        const head = {
+            'Content-Type': 'application/ json',
+            'Accept': 'application/json'
+        };
         let task = fetch(`api/Product/Create`,
-                {
-                    method: 'POST',
-                    headers: new Headers({ 'Content-Type': 'application/json' }),
+            {
+                method: 'POST',
+                headers: ( authHeader(), head ),
+            
                     body: JSON.stringify(product)
                 })
             .then(response => response.json() as Promise<IProductVm>)
@@ -66,14 +74,18 @@ export const actionCreators = {
     },
 
     getAllProducts: (): AppThunkAction<KnowAction> => (dispatch, getState) => {
-        fetch(`api/Product/GetAll`)
+        
+        fetch(`api/Product/GetAll`, {
+            headers:authHeader()
+                
+            })
             .then(response => response.json() as Promise<IProductVm[]>)
             .then(data => {
                 dispatch({type: 'GET_ALL_PRODUCTS', payload: data});
             });
     },
 
-    updateProduct: (): AppThunkAction<KnowAction> => (dispatch, getState) => {
+    updateProduct: (product: IProductVm): AppThunkAction<KnowAction> => (dispatch, getState) => {
         return fetch('', {
 
             })
@@ -81,17 +93,27 @@ export const actionCreators = {
             .then()
             .catch();
     },
-    deleteProduct: (): AppThunkAction<KnowAction> => (dispatch, getState) => {
-        return fetch('', {
+    deleteProduct: (id: number): AppThunkAction<KnowAction> => (dispatch, getState) => {
+        const head = {
+            'Content-Type': 'application/ json',
+            'Accept': 'application/json'
+        };
 
-            })
-            .then()
-            .then()
-            .catch();
+       return fetch(`api/Product/Delete/${id}`,
+           {
+               method: 'DELETE',
+               headers: (authHeader(), head)
+               
+           })
+            .then(response => response.json())
+            .then(data => {
+                dispatch({ type: 'DELETE_PRODUCT', payload: id });
+            });
+
     }
 }
 
-const newProduct: IProductVm = { prodName: '', price: '' };
+const newProduct: IProductVm = { id:0, prodName: '', price: '' };
 const initialState: IProductState = { products: [], isSubmitted: false };
 
 export const reducer: Reducer<IProductState> = (state: IProductState, incommingAction: Action) => {
@@ -106,8 +128,9 @@ export const reducer: Reducer<IProductState> = (state: IProductState, incommingA
             return Object.assign({}, state, { isSubmitted: true });
 
     case 'DELETE_PRODUCT':
-            return Object.assign({}, state,{ isSubmitted: true });
-
+        const id = action.payload;
+        return Object.assign({}, state, { products: state.products.filter(x=>x.id !== id)});
+        
     case 'UPDATE_PRODUCT':
             return Object.assign({}, state, { isSubmitted: true });
 

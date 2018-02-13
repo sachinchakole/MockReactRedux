@@ -33,6 +33,9 @@ export class NavMenu extends React.Component<INavMenuProps, {}> {
                           <LinkContainer to="/counter">
                               <NavItem eventKey={3}>Counter</NavItem>
                           </LinkContainer>
+                       <LinkContainer to="/fetchdata">
+                           <NavItem eventKey={4}>Weather</NavItem>
+                       </LinkContainer>
                           <LinkContainer to="/product">
                               <NavItem eventKey={4}>Product</NavItem>
                           </LinkContainer>
